@@ -44,7 +44,7 @@ class Product(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.PROTECT)
     promotions = models.ManyToManyField(Promotion, blank=True)
 
-    def __str__(self) -> str:
+    def _str_(self) -> str:
         '''
         Return the title of the product.
         '''

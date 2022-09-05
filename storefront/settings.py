@@ -137,3 +137,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# To change the django rest default value of intger filed string to int
+REST_FRAMEWORK = {
+   'COERCE_DECIMAL_TO_STRING': False,
+}
