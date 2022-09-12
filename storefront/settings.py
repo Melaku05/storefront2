@@ -37,12 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    "django_filters",
     "rest_framework",
     "debug_toolbar",
     "store.apps.StoreConfig",
     "tags.apps.TagsConfig",
     "store_custom.apps.StoreCustomConfig",
-    'django.contrib.sites',
 ]
 
 INTERNAL_IPS = [

@@ -6,11 +6,10 @@ from . import views
 from django.urls import path, include
 
 router = routers.DefaultRouter()
-router.register('products', views.ProductViewListSet)
-router.register('collections', views.CollectionViewListSet)
-router.register('reviews', views.ReviewViewListSet)
-review_router = routers.NestedSimpleRouter(router, r'products', lookup='products')
-review_router.register(r'reviews', views.ReviewViewListSet, basename='product-reviews')
+router.register('products', views.ProductViewSet, basename='products')
+router.register('collections', views.CollectionViewSet)
+review_router = routers.NestedSimpleRouter(router, r'products', lookup='product')
+review_router.register(r'reviews', views.ReviewViewSet, basename='product-reviews')
 app_name = 'store'
 
 urlpatterns = [
