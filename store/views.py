@@ -6,32 +6,22 @@ from rest_framework.mixins import ListModelMixin, CreateModelMixin
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework import generics
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
-from .models import Product, Collection
-from .serializers import ProductSerializer, CollectionSerializer
+from .models import Product, Collection, Review
+from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializer
 from store import serializers
 # if our views class have not logic, we can smplify further like this:
 
-class ProductList(generics.ListCreateAPIView):
+class ProductViewListSet(ModelViewSet):
     queryset = Product.objects.select_related('collection').all() # returns queryset (fix the queryset problem)
     serializer_class = ProductSerializer
-
     def get_serializer_context(self):
         return {'request': self.request}
 
-class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset =  Product.objects.all()
-    serializer_class = ProductSerializer
-
-class CollectionList(generics.ListCreateAPIView):
+class CollectionViewListSet(ModelViewSet):
     queryset = Collection.objects.annotate(products_count=Count('products')) 
     serializer_class = CollectionSerializer
-
-class CollectionDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Collection.objects.annotate(
-        products_count=Count('products'))
-    serializer_class = CollectionSerializer
-
     def delete(self, request, pk):
         collection = get_object_or_404(Collection, pk=pk)
         if collection.products.count() > 0:
@@ -39,5 +29,7 @@ class CollectionDetail(generics.RetrieveUpdateDestroyAPIView):
         collection.delete()
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
 
-
-
+class ReviewViewListSet(ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+   
