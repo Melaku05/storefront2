@@ -6,5 +6,5 @@ class ProductFilter(FilterSet):
         model = Product
         fields = {
             'collection_id': ['exact'],
-            'price': ['gt', 'lt'],
+            'unit_price': ['gt', 'lt'],
         }

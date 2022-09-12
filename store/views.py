@@ -16,7 +16,7 @@ class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ProductFilter
+    filterset_class = ProductFilter
 
     def get_serializer_context(self):
         return {'request': self.request}
