@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Collection
+from .models import Product, Collection, Review
 
 class ProductSerializer(serializers.ModelSerializer):
     '''
@@ -19,6 +19,15 @@ class CollectionSerializer(serializers.ModelSerializer):
         model = Collection
         fields = ['id', 'title', 'products_count']
     products_count = serializers.IntegerField(read_only=True)
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    '''
+    ReviewSerializer class inherit ModelSerializer class from rest_framework, Modelserializer is save method ,to create or update our review model
+    '''
+    class Meta:
+        model = Review
+        fields = ['id', 'product', 'name','description', 'date']
     
     
     

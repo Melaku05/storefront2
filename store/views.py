@@ -8,8 +8,8 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
-from .models import Product, Collection
-from .serializers import ProductSerializer, CollectionSerializer
+from .models import Product, Collection, Review
+from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializer
 from store import serializers
 # if our views class have not logic, we can smplify further like this:
 
@@ -28,3 +28,8 @@ class CollectionViewListSet(ModelViewSet):
             return Response({'message': 'You can not delete this collection'}, status=status.HTTP_400_BAD_REQUEST) 
         collection.delete()
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+class ReviewViewListSet(ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+   
