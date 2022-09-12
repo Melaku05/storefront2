@@ -24,3 +24,6 @@ class ProductList(generics.ListCreateAPIView):
     def get_serializer_context(self):
         return {'request': self.request}
 ```
+
+
+`basename` used to generate name of url pattern
