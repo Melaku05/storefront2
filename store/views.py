@@ -1,6 +1,8 @@
 from django.db.models.aggregates import Count
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
@@ -9,15 +11,10 @@ from .serializers import ProductSerializer, CollectionSerializer, ReviewSerializ
 # if our views class have not logic, we can smplify further like this:
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.select_related('collection').all() # returns queryset (fix the queryset problem)
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
-
-    def get_queryset(self):
-        queryset = Product.objects.all()
-        collection_id = self.request.query_params.get('collection_id', None)
-        if collection_id is not None:
-            queryset = queryset.filter(collection_id=collection_id)
-        return queryset
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['collection_id']
 
     def get_serializer_context(self):
         return {'request': self.request}
