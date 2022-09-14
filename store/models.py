@@ -1,7 +1,6 @@
-from itertools import product
-from unicodedata import name
 from django.core.validators import MinValueValidator
 from django.db import models
+from uuid import uuid4
 
 
 class Promotion(models.Model):
@@ -133,6 +132,7 @@ class Cart(models.Model):
     '''
     Cart is a many-to-one relationship between Customer and Order.
     '''
+    id = models.UUIDField(primary_key=True, default=uuid4) #It is a passing reference, not just a calling function.
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -140,9 +140,12 @@ class CartItem(models.Model):
     '''
     CartItem is a many-to-many relationship between Cart and Product.
     '''
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField()
+    
+    class Meta:
+        unique_together = [['cart', 'product']]
 
 
 class Review(models.Model):
@@ -150,3 +153,4 @@ class Review(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     date = models.DateField(auto_now_add=True)
+
