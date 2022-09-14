@@ -1,3 +1,4 @@
+from itertools import permutations
 from django.contrib import admin
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -114,7 +115,10 @@ class Order(models.Model):
         max_length=1, choices=PAYMENT_STATUS_CHOICES, default=PAYMENT_STATUS_PENDING)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
 
-
+    class Meta:
+        permissions = [
+            ('cancel_order', 'can cancel order')
+        ]
 class OrderItem(models.Model):
     '''
     OrderItem is a many-to-many relationship between Order and Product.
