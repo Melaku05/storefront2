@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "store.apps.StoreConfig",
     "tags.apps.TagsConfig",
-    "store_custom.apps.StoreCustomConfig",
+    "likes.apps.LikesConfig",
+    "core",
 ]
 
 INTERNAL_IPS = [
@@ -144,3 +145,5 @@ REST_FRAMEWORK = {
    #'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination', default pagination
     'PAGE_SIZE': 10
 }
+
+AUTH_USER_MODEL = 'core.User'
